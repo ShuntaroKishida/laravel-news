@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ Route::get('/', [PostController::class, 'index']);
 Route::get('post/create', [PostController::class, 'create']);
 Route::post('post', [PostController::class, 'store'])->name('post.store');
 Route::get('post/show/{post}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('comment/create', [CommentController::class, 'create']);
+Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
