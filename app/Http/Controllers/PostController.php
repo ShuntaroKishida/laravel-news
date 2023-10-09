@@ -26,4 +26,8 @@ class PostController extends Controller
         $post = Post::create($validated);
         return back();
     }
+
+    public function show(Post $post){
+        return view('post.show', compact('post'));
+    }
 }
