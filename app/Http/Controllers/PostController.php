@@ -14,10 +14,11 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $post = Post::create([
-            'title' => $request->title,
-            'body' => $request->body
+        $validated = $request->validate([
+            'title' => 'required|max:30',
+            'body' => 'required',
         ]);
+        $post = Post::create($validated);
         return back();
     }
 }
