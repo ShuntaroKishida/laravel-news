@@ -38,14 +38,40 @@
         @foreach ($posts as $post)
             <div class="mt-4 p-8 bg-white w-full rounded-2xl">
                 <h1 class="p-4 text-lg font-semibold">
-                    <a href="{{route('post.show', $post)}}" class="text-blue-600">
-                        {{$post->title}}
+                    <a href="{{ route('post.show', $post) }}" class="text-blue-600">
+                        {{ $post->title }}
                     </a>
                 </h1>
                 <hr class="w-full">
                 <p class="mt-4 p-4">
                     {{ $post->body }}
                 </p>
+                <!-- 投稿に関連したコメント一覧を表示 -->
+                <h2 class="text-lg font-semibold mt-4">コメント一覧</h2>
+                @foreach ($post->comments as $comment)
+                    <div class="mt-2 p-2 bg-gray-100 rounded">
+                        <strong>{{ $comment->name }}</strong>: {{ $comment->content }}
+                        <form action="{{ route('comment.destroy', ['post' => $post, 'comment' => $comment]) }}"
+                            method="post" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 ml-2">削除</button>
+                        </form>
+                    </div>
+                @endforeach
+                <!-- コメント投稿フォーム -->
+                <div class="mt-4">
+                    <form action="{{ route('comment.store', $post) }}" method="post">
+                        @csrf
+                        <div class="flex items-center">
+                            <input type="text" name="name" placeholder="名前"
+                                class="p-2 border border-gray-300 rounded">
+                            <input type="text" name="content" placeholder="コメント"
+                                class="p-2 border border-gray-300 rounded ml-2 flex-1">
+                            <button type="submit" class="bg-blue-500 text-white rounded p-2 ml-2">コメント投稿</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         @endforeach
     </div>
