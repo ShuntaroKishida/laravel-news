@@ -33,7 +33,7 @@ class CommentController extends Controller
         $comment->save();
 
         // 保存したコメントを関連する投稿のページにリダイレクト
-        return redirect()->route('post.index');
+        return redirect()->route('post.show', ['post' => $postId]);
     }
 
     public function destroy($post, Comment $comment)
@@ -42,6 +42,6 @@ class CommentController extends Controller
         $comment->delete();
 
         // リダイレクト先を指定（例：投稿の詳細ページに戻る）
-        return redirect()->route('post.index', $post);
+        return redirect()->route('post.show', ['post' => $post]);
     }
 }
